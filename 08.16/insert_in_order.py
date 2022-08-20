@@ -4,40 +4,32 @@ lst = []
 def find_index(lst, num):
     ind = 0
     for each in lst:
-        if each == num:
+        if each >= num:
             break
         ind += 1
+    if ind > len(lst):
+        return False
     return ind
 
 
 def just_add(ele):
-    print("Not in list, added as last.")
+    print("No larger number found, added as last.")
     lst.append(ele)
 
 
-# insert 6 before 3
-# 1  2 (3) 4        # get index of 3
-# 1  2 [3  4] 0     # add 0
-# 1  2  3 [3  4]    # right shift, from last of original to index
-# 1  2 (6) 3  4     # set index to value
-# if inserting after, index += 1
 def my_append():
     ele = int(input("What element to append? "))
+    where = find_index(lst, ele)
 
-    if not lst:
+    if not lst or type(where) is bool:
         just_add(ele)
         return 0
 
-    pos = int(input("Which element to compare to? "))
-    if pos in lst:
-        lst.append(0)
-        after = int(bool(int(input("Before (0) or after (1)? "))))
-        where = find_index(lst, pos)
-        for i in range(len(lst) - 1, where + after, -1):
-            lst[i] = lst[i - 1]
-        lst[where + after] = ele
-    else:
-        just_add(ele)
+    lst.append(0)
+    for i in range(len(lst) - 1, where - 1, -1):
+        lst[i] = lst[i - 1]
+
+    lst[where] = ele
 
 
 def print_menu():
