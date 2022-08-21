@@ -158,9 +158,10 @@ def sales_by_category():
     for each in product_data:
         print(each.ljust(len(each) + 3), end="")
     print("")
+
     for order in orders.values():
         prod_id = order[1]
-        if products[prod_id][2] == category_id:
+        if products[prod_id][3] == category_id:
             total_num += order[2]
             total_price += order[3]
             for i, data_point in enumerate(order):
