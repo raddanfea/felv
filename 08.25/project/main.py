@@ -54,9 +54,8 @@ w_chess = {
 
 
 # checks if it would be a valid move  without considering other pieces in the way
-# return True or False by default
-# SPECIAL CASES:
-# pawn takeover move returns TAKEOVER
+# returns True or False except in special cases:
+# pawn takeover move returns 'TAKEOVER'
 def check_valid_move(chosen_piece, current_player, from_location, target_location):
     f_l_location = letters.find(from_location[0])
     t_l_location = letters.find(target_location[0])
@@ -84,13 +83,32 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                         return True
             return False
         case 'knight':
-            pass
+            lateral = abs(f_l_location - t_l_location)
+            vertical = abs(from_location_line - target_location_line)
+            print(lateral, vertical)
+            if lateral == 1 and vertical == 2:
+                return True
+            elif vertical == 1 and lateral == 2:
+                return True
+            return False
         case 'bishop':
-            pass
+            if abs(f_l_location - t_l_location) == abs(from_location_line - target_location_line):
+                return True
+            return False
         case 'rook':
-            pass
+            if from_location_line != target_location_line and f_l_location == t_l_location:
+                return True
+            elif f_l_location != t_l_location and from_location_line == target_location_line:
+                return True
+            return False
         case 'queen':
-            pass
+            if abs(f_l_location - t_l_location) == abs(from_location_line - target_location_line):
+                return True
+            elif from_location_line != target_location_line and f_l_location == t_l_location:
+                return True
+            elif f_l_location != t_l_location and from_location_line == target_location_line:
+                return True
+            return False
         case 'king':
             if abs(from_location_line - target_location_line) == 1 and f_l_location == t_l_location:
                 return True
