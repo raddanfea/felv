@@ -69,7 +69,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                 if target_vertical_location == from_vertical_location + 1 and abs(from_horizontal_location - target_horizontal_location) == 1:
                     return "TAKEOVER"
                 elif from_vertical_location == 2:
-                    if target_vertical_location in (2, 3) and target_location[0] == from_location[0]:
+                    if target_vertical_location in (3, 4) and target_location[0] == from_location[0]:
                         return True
                 elif target_vertical_location == from_vertical_location + 1 and target_location[0] == from_location[0]:
                         return True
@@ -86,7 +86,6 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
         case 'knight':
             lateral = abs(from_horizontal_location - target_horizontal_location)
             vertical = abs(from_vertical_location - target_vertical_location)
-            print(lateral, vertical)
             if lateral == 1 and vertical == 2:
                 return True
             elif vertical == 1 and lateral == 2:
@@ -109,6 +108,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
             elif from_horizontal_location != target_horizontal_location and from_vertical_location == target_vertical_location:
                 return True
             return False
+        # queen is both bishop and rook at the same time
         case 'queen':
             if abs(from_horizontal_location - target_horizontal_location) == abs(from_vertical_location - target_vertical_location):
                 return True
@@ -117,7 +117,9 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
             elif from_horizontal_location != target_horizontal_location and from_vertical_location == target_vertical_location:
                 return True
             return False
+        # king is checking neighbors
         case 'king':
+            print(abs(from_horizontal_location - target_horizontal_location), from_vertical_location == target_vertical_location)
             if abs(from_vertical_location - target_vertical_location) == 1 and from_horizontal_location == target_horizontal_location:
                 return True
             elif abs(from_horizontal_location - target_horizontal_location) == 1 and from_vertical_location == target_vertical_location:
@@ -139,34 +141,35 @@ def main():
         while True:
             from_location = input('Choose piece to move:  ')
             if from_location[0] in letters and 0 < int(from_location[1]) < 9 and len(from_location) == 2:
-                l_index = letters.find(from_location[0])
-                if matrix[8 - int(from_location[1])][l_index][0] == current_player:
-                    chosen_piece = matrix[8 - int(from_location[1])][l_index][1]
+                horizontal_index_original = letters.find(from_location[0])
+                if matrix[8 - int(from_location[1])][horizontal_index_original][0] == current_player:
+                    chosen_piece = matrix[8 - int(from_location[1])][horizontal_index_original][1]
                     break
 
         # target location
+        valid, what_is_there = False, False
         while True:
             target_location = input('Where to move piece:  ')
             if target_location \
-                    and target_location[0] in letters \
+                    and target_location[0] in letters\
                     and 0 < int(target_location[1]) < 9 \
-                    and len(target_location) == 2\
-                    and matrix[8 - int(target_location[1])][l_index][0] != current_player:
-                l_index = letters.find(target_location[0])
-                is_occupied = matrix[8 - int(target_location[1])][l_index][0]
-                what_is_there = matrix[8 - int(target_location[1])][l_index][1]
+                    and len(target_location) == 2:
+                horizontal_index_target = letters.find(target_location[0])
+                is_occupied = matrix[8 - int(target_location[1])][horizontal_index_target][0]
+                if is_occupied == current_player: continue
+                what_is_there = matrix[8 - int(target_location[1])][horizontal_index_target][1]
                 valid = check_valid_move(chosen_piece, current_player, from_location, target_location)
                 if valid: break
 
         if valid:
             if what_is_there in chess_pieces:
-                taken.append(what_is_there)
-            matrix[8 - int(target_location[1])][l_index] = (current_player, chosen_piece)
-            matrix[8 - int(from_location[1])][l_index] = (0, empty_location)
+                taken.append(f'{what_is_there}')
+            matrix[8 - int(target_location[1])][horizontal_index_target] = (current_player, chosen_piece)
+            matrix[8 - int(from_location[1])][horizontal_index_original] = (0, empty_location)
 
         print(from_location, '>', target_location, chosen_piece)
 
-        current_player = int(not bool(current_player - 1)) + 1
+        # current_player = int(not bool(current_player - 1)) + 1
 
 
 if __name__ == '__main__':
