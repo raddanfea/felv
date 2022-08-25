@@ -1,6 +1,11 @@
-# Chess
 ## Progress
-- Board ✓
-- Start state ✓
-- Movement types ✓
-- Collison check ☐
+
+| Name              |   Status   |
+|:------------------|:----------:|
+| Board             |   ✓    |
+| Pieces            |   ✓    |
+| Players           |   ✓    |
+| Movement Types    |   ✓    |
+| Collison checking |   ☐    |
+| Check             |   ☐    |
+| Checkmate         |    ☐    | 

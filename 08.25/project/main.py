@@ -64,6 +64,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
     from_vertical_location = int(from_location[1])
     target_vertical_location = int(target_location[1])
     match chosen_piece:
+        # pawn move up or down, vertical if TAKING
         case 'pawn':
             if current_player == 1:
                 if target_vertical_location == from_vertical_location + 1 and abs(from_horizontal_location - target_horizontal_location) == 1:
@@ -171,7 +172,7 @@ def main():
 
         print(from_location, '>', target_location, chosen_piece)
 
-        # current_player = int(not bool(current_player - 1)) + 1
+        current_player = int(not bool(current_player - 1)) + 1
 
 
 if __name__ == '__main__':
