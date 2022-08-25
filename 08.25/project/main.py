@@ -92,10 +92,17 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
             elif vertical == 1 and lateral == 2:
                 return True
             return False
+        # bishop
+        # checks is if in diagonal line ex: (3, 3) to (4, 4)
+        #                                   abs(3-4) = 1      abs(3-4) = 1
+        #                                   1 = 1 so it is vertical
         case 'bishop':
             if abs(from_horizontal_location - target_horizontal_location) == abs(from_vertical_location - target_vertical_location):
                 return True
             return False
+        # rook
+        # checks is if in horizontal or vertical line ex:   (3, 3) to (3, 4)
+        #                      x1 and x2 or y1 and y2 should be equal, both cannot be because that where we are
         case 'rook':
             if from_vertical_location != target_vertical_location and from_horizontal_location == target_horizontal_location:
                 return True
