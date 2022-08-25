@@ -71,8 +71,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                 elif from_vertical_location == 2:
                     if target_vertical_location in (2, 3) and target_location[0] == from_location[0]:
                         return True
-                else:
-                    if target_vertical_location == from_vertical_location - 1 and target_location[0] == from_location[0]:
+                elif target_vertical_location == from_vertical_location + 1 and target_location[0] == from_location[0]:
                         return True
             else:
                 if target_vertical_location == from_vertical_location - 1 and abs(from_horizontal_location - target_horizontal_location) == 1:
@@ -81,7 +80,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                     if target_vertical_location in (6, 5) and target_location[0] == from_location[0]:
                         return True
                 else:
-                    if target_vertical_location == from_vertical_location + 1 and target_location[0] == from_location[0]:
+                    if target_vertical_location == from_vertical_location - 1 and target_location[0] == from_location[0]:
                         return True
             return False
         case 'knight':
