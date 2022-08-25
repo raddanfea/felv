@@ -57,34 +57,34 @@ w_chess = {
 # returns True or False except in special cases:
 # pawn takeover move returns 'TAKEOVER'
 def check_valid_move(chosen_piece, current_player, from_location, target_location):
-    f_l_location = letters.find(from_location[0])
-    t_l_location = letters.find(target_location[0])
-    from_location_line = int(from_location[1])
-    target_location_line = int(target_location[1])
+    from_horizontal_location = letters.find(from_location[0])
+    target_horizontal_location = letters.find(target_location[0])
+    from_vertical_location = int(from_location[1])
+    target_vertical_location = int(target_location[1])
     match chosen_piece:
         case 'pawn':
             if current_player == 1:
-                if target_location_line == from_location_line + 1 and abs(f_l_location - t_l_location) == 1:
+                if target_vertical_location == from_vertical_location + 1 and abs(from_horizontal_location - target_horizontal_location) == 1:
                     return "TAKEOVER"
-                elif from_location_line == 2:
-                    if target_location_line in (2, 3) and target_location[0] == from_location[0]:
+                elif from_vertical_location == 2:
+                    if target_vertical_location in (2, 3) and target_location[0] == from_location[0]:
                         return True
                 else:
-                    if target_location_line == from_location_line - 1 and target_location[0] == from_location[0]:
+                    if target_vertical_location == from_vertical_location - 1 and target_location[0] == from_location[0]:
                         return True
             else:
-                if target_location_line == from_location_line - 1 and abs(f_l_location - t_l_location) == 1:
+                if target_vertical_location == from_vertical_location - 1 and abs(from_horizontal_location - target_horizontal_location) == 1:
                     return "TAKEOVER"
-                elif from_location_line == 7:
-                    if target_location_line in (6, 5) and target_location[0] == from_location[0]:
+                elif from_vertical_location == 7:
+                    if target_vertical_location in (6, 5) and target_location[0] == from_location[0]:
                         return True
                 else:
-                    if target_location_line == from_location_line + 1 and target_location[0] == from_location[0]:
+                    if target_vertical_location == from_vertical_location + 1 and target_location[0] == from_location[0]:
                         return True
             return False
         case 'knight':
-            lateral = abs(f_l_location - t_l_location)
-            vertical = abs(from_location_line - target_location_line)
+            lateral = abs(from_horizontal_location - target_horizontal_location)
+            vertical = abs(from_vertical_location - target_vertical_location)
             print(lateral, vertical)
             if lateral == 1 and vertical == 2:
                 return True
@@ -92,27 +92,27 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                 return True
             return False
         case 'bishop':
-            if abs(f_l_location - t_l_location) == abs(from_location_line - target_location_line):
+            if abs(from_horizontal_location - target_horizontal_location) == abs(from_vertical_location - target_vertical_location):
                 return True
             return False
         case 'rook':
-            if from_location_line != target_location_line and f_l_location == t_l_location:
+            if from_vertical_location != target_vertical_location and from_horizontal_location == target_horizontal_location:
                 return True
-            elif f_l_location != t_l_location and from_location_line == target_location_line:
+            elif from_horizontal_location != target_horizontal_location and from_vertical_location == target_vertical_location:
                 return True
             return False
         case 'queen':
-            if abs(f_l_location - t_l_location) == abs(from_location_line - target_location_line):
+            if abs(from_horizontal_location - target_horizontal_location) == abs(from_vertical_location - target_vertical_location):
                 return True
-            elif from_location_line != target_location_line and f_l_location == t_l_location:
+            elif from_vertical_location != target_vertical_location and from_horizontal_location == target_horizontal_location:
                 return True
-            elif f_l_location != t_l_location and from_location_line == target_location_line:
+            elif from_horizontal_location != target_horizontal_location and from_vertical_location == target_vertical_location:
                 return True
             return False
         case 'king':
-            if abs(from_location_line - target_location_line) == 1 and f_l_location == t_l_location:
+            if abs(from_vertical_location - target_vertical_location) == 1 and from_horizontal_location == target_horizontal_location:
                 return True
-            elif abs(f_l_location - t_l_location) == 1 and from_location_line == target_location_line:
+            elif abs(from_horizontal_location - target_horizontal_location) == 1 and from_vertical_location == target_vertical_location:
                 return True
             return False
 
