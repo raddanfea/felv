@@ -18,18 +18,20 @@ def display():
         print(each.center(2), end='')
     print()
 
+empty_location = " "
+chess_pieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
+taken = []
 
-order = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
 
 # player id, piece id
 piece = (0, 0)
 
 
 def start_pos():
-    for i in range(len(order)):
-        matrix[0][i] = (2, order[i])
+    for i in range(len(chess_pieces)):
+        matrix[0][i] = (2, chess_pieces[i])
         matrix[1][i] = (2, 'pawn')
-        matrix[7][i] = (1, order[i])
+        matrix[7][i] = (1, chess_pieces[i])
         matrix[6][i] = (1, 'pawn')
 
 
@@ -126,6 +128,8 @@ def main():
 
         display()
         global letters
+
+        # current player's piece
         while True:
             from_location = input('Choose piece to move:  ')
             if from_location[0] in letters and 0 < int(from_location[1]) < 9 and len(from_location) == 2:
@@ -134,16 +138,21 @@ def main():
                     chosen_piece = matrix[8 - int(from_location[1])][l_index][1]
                     break
 
+        # target location
         while True:
             target_location = input('Where to move piece:  ')
-            letters = 'abcdefgh'
             if target_location[0] in letters and 0 < int(target_location[1]) < 9 and len(target_location) == 2:
                 l_index = letters.find(target_location[0])
                 is_occupied = matrix[8 - int(target_location[1])][l_index][0]
                 what_is_there = matrix[8 - int(target_location[1])][l_index][1]
-                v = check_valid_move(chosen_piece, current_player, from_location, target_location)
-                print(v)
-                if v: break
+                valid = check_valid_move(chosen_piece, current_player, from_location, target_location)
+                if valid: break
+
+        if valid:
+            if what_is_there in chess_pieces:
+                taken.append(what_is_there)
+            matrix[8 - int(target_location[1])][l_index] = (current_player, chosen_piece)
+            matrix[8 - int(from_location[1])][l_index] = (0, empty_location)
 
         print(from_location, '>', target_location, chosen_piece)
 

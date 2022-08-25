@@ -32,6 +32,7 @@ def start_pos():
         matrix[7][i] = (1, order[i])
         matrix[6][i] = (1, 'pawn')
 
+
 letters = 'abcdefgh'
 
 b_chess = {
@@ -53,8 +54,7 @@ w_chess = {
 
 
 def make_a_move(chosen_piece, current_player, from_location, target_location):
-    
-    check=check_valid_move(chosen_piece, current_player, from_location, target_location)
+    check = check_valid_move(chosen_piece, current_player, from_location, target_location)
     from_horizontal_location = letters.find(from_location[0])
     print('from_horizontal_location {}'.format(from_horizontal_location))
     target_horizontal_location = letters.find(target_location[0])
@@ -65,12 +65,10 @@ def make_a_move(chosen_piece, current_player, from_location, target_location):
     print('from_location_line {}'.format(from_location_line))
     target_location_line = int(target_location[1])  # vertical position
     print('target_location_line {}'.format(target_location_line))
-    
+
     for i in range(len(order)):
-        matrix[7-from_location_line][target_location_line] = (2, 'pawn')
-        
-    
-        
+        matrix[7 - from_location_line][target_location_line] = (2, 'pawn')
+
 
 # checks if it would be a valid move  without considering other pieces in the way
 # return True or False by default
@@ -84,22 +82,26 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
     match chosen_piece:
         case 'pawn':
             if current_player == 1:
-                if target_vertical_location == from_vertical_location + 1 and abs(from_horizontal_location - target_horizontal_location) == 1:
+                if target_vertical_location == from_vertical_location + 1 and abs(
+                        from_horizontal_location - target_horizontal_location) == 1:
                     return "TAKEOVER"
                 elif from_vertical_location == 2:
                     if target_vertical_location in (2, 3) and target_location[0] == from_location[0]:
                         return True
                 else:
-                    if target_vertical_location == from_vertical_location - 1 and target_location[0] == from_location[0]:
+                    if target_vertical_location == from_vertical_location - 1 and target_location[0] == from_location[
+                        0]:
                         return True
             else:
-                if target_vertical_location == from_vertical_location - 1 and abs(from_horizontal_location - target_horizontal_location) == 1:
+                if target_vertical_location == from_vertical_location - 1 and abs(
+                        from_horizontal_location - target_horizontal_location) == 1:
                     return "TAKEOVER"
                 elif from_vertical_location == 7:
                     if target_vertical_location in (6, 5) and target_location[0] == from_location[0]:
                         return True
                 else:
-                    if target_vertical_location == from_vertical_location + 1 and target_location[0] == from_location[0]:
+                    if target_vertical_location == from_vertical_location + 1 and target_location[0] == from_location[
+                        0]:
                         return True
             return False
         case 'knight':
@@ -112,7 +114,8 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                 return True
             return False
         case 'bishop':
-            if abs(from_horizontal_location - target_horizontal_location) == abs(from_vertical_location - target_vertical_location):
+            if abs(from_horizontal_location - target_horizontal_location) == abs(
+                    from_vertical_location - target_vertical_location):
                 return True
             return False
         case 'rook':
@@ -122,7 +125,8 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                 return True
             return False
         case 'queen':
-            if abs(from_horizontal_location - target_horizontal_location) == abs(from_vertical_location - target_vertical_location):
+            if abs(from_horizontal_location - target_horizontal_location) == abs(
+                    from_vertical_location - target_vertical_location):
                 return True
             elif from_vertical_location != target_vertical_location and from_horizontal_location == target_horizontal_location:
                 return True
@@ -132,9 +136,11 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
         case 'king':
             if abs(from_vertical_location - target_vertical_location) == 1 and from_horizontal_location == target_horizontal_location:
                 return True
-            elif abs(from_horizontal_location - target_horizontal_location) == 1 and from_vertical_location == target_vertical_location:
+            elif abs(
+                    from_horizontal_location - target_horizontal_location) == 1 and from_vertical_location == target_vertical_location:
                 return True
             return False
+
 
 def main():
     current_player = 1
