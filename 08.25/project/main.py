@@ -51,11 +51,26 @@ w_chess = {
 }
 
 
-def check_valid_move(chosen_piece, from_location, target_location):
+def check_valid_move(chosen_piece, current_player, from_location, target_location):
+    from_location_line = int(from_location[1])
+    target_location_line = int(target_location[1])
     match chosen_piece:
         case 'pawn':
-            if from_location[1] == 7 or from_location[1] == 2:
-                if target_location[1]
+            if current_player == 1:
+                if from_location_line == 2:
+                    if target_location_line in (2, 3) and target_location[0] == from_location[0]:
+                        return True
+                else:
+                    if target_location_line == from_location_line-1 and target_location[0] == from_location[0]:
+                        return True
+            else:
+                if from_location_line == 7:
+                    if target_location_line in (6, 5) and target_location[0] == from_location[0]:
+                        return True
+                else:
+                    if target_location_line == from_location_line-1 and target_location[0] == from_location[0]:
+                        return True
+
         case 'knight':
             pass
         case 'bishop':
