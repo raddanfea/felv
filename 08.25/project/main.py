@@ -9,19 +9,19 @@ def display():
         for piece in line:
             player, piece_id = piece
             if player == 1:
-                print(w_chess.get(piece_id, '　').center(3), end="")
+                print(w_chess.get(piece_id, '　').center(2), end="")
             else:
-                print(b_chess.get(piece_id, '　').center(3), end="")
+                print(b_chess.get(piece_id, '　').center(2), end="")
         print(8 - i)
     chars = 'ａｂｃｄｅｆｇｈ'
     for each in chars:
-        print(each.center(3), end='')
+        print(each.center(2), end='')
     print()
 
 
 order = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
 
-#       player id, piece id
+# player id, piece id
 piece = (0, 0)
 
 
