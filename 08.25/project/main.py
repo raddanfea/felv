@@ -53,6 +53,10 @@ w_chess = {
 }
 
 
+# checks if it would be a valid move  without considering other pieces in the way
+# return True or False by default
+# SPECIAL CASES:
+# pawn takeover move returns TAKEOVER
 def check_valid_move(chosen_piece, current_player, from_location, target_location):
     f_l_location = letters.find(from_location[0])
     t_l_location = letters.find(target_location[0])
@@ -61,7 +65,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
     match chosen_piece:
         case 'pawn':
             if current_player == 1:
-                if target_location_line == from_location_line+1 and abs(f_l_location-t_l_location) == 1:
+                if target_location_line == from_location_line + 1 and abs(f_l_location - t_l_location) == 1:
                     return "TAKEOVER"
                 elif from_location_line == 2:
                     if target_location_line in (2, 3) and target_location[0] == from_location[0]:
@@ -70,7 +74,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                     if target_location_line == from_location_line - 1 and target_location[0] == from_location[0]:
                         return True
             else:
-                if target_location_line == from_location_line - 1 and abs(f_l_location-t_l_location) == 1:
+                if target_location_line == from_location_line - 1 and abs(f_l_location - t_l_location) == 1:
                     return "TAKEOVER"
                 elif from_location_line == 7:
                     if target_location_line in (6, 5) and target_location[0] == from_location[0]:
@@ -118,7 +122,7 @@ def main():
                 what_is_there = matrix[8 - int(target_location[1])][l_index][1]
                 v = check_valid_move(chosen_piece, current_player, from_location, target_location)
                 print(v)
-                if v:break
+                if v: break
 
         print(from_location, '>', target_location, matrix[8 - int(from_location[1])][l_index][1])
 
