@@ -124,6 +124,8 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                 return True
             elif abs(from_horizontal_location - target_horizontal_location) == 1 and from_vertical_location == target_vertical_location:
                 return True
+            elif abs(from_horizontal_location - target_horizontal_location) == 1 and abs(from_vertical_location - target_vertical_location) == 1:
+                return True
             return False
 
 
