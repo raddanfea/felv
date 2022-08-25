@@ -92,7 +92,11 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
         case 'queen':
             pass
         case 'king':
-            pass
+            if abs(from_location_line - target_location_line) == 1 and f_l_location == t_l_location:
+                return True
+            elif abs(f_l_location - t_l_location) == 1 and from_location_line == target_location_line:
+                return True
+            return False
 
 
 def main():
@@ -106,7 +110,6 @@ def main():
         global letters
         while True:
             from_location = input('Choose piece to move:  ')
-
             if from_location[0] in letters and 0 < int(from_location[1]) < 9 and len(from_location) == 2:
                 l_index = letters.find(from_location[0])
                 if matrix[8 - int(from_location[1])][l_index][0] == current_player:
@@ -124,7 +127,7 @@ def main():
                 print(v)
                 if v: break
 
-        print(from_location, '>', target_location, matrix[8 - int(from_location[1])][l_index][1])
+        print(from_location, '>', target_location, chosen_piece)
 
         current_player = int(not bool(current_player - 1)) + 1
 
