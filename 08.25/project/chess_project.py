@@ -67,7 +67,7 @@ def make_a_move(chosen_piece, current_player, from_location, target_location):
     print('target_location_line {}'.format(target_location_line))
     
     for i in range(len(order)):
-        matrix[from_location_line][target_location_line] = (2, 'pawn')
+        matrix[7-from_location_line][target_location_line] = (2, 'pawn')
         
     
         
