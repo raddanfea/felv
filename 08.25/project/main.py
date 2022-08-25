@@ -27,11 +27,13 @@ piece = (0, 0)
 
 def start_pos():
     for i in range(len(order)):
-        matrix[7][i] = (1, order[i])
-        matrix[6][i] = (1, 'pawn')
         matrix[0][i] = (2, order[i])
         matrix[1][i] = (2, 'pawn')
+        matrix[7][i] = (1, order[i])
+        matrix[6][i] = (1, 'pawn')
 
+
+letters = 'abcdefgh'
 
 b_chess = {
     'king': '♔',
@@ -52,23 +54,29 @@ w_chess = {
 
 
 def check_valid_move(chosen_piece, current_player, from_location, target_location):
+    f_l_location = letters.find(from_location[0])
+    t_l_location = letters.find(target_location[0])
     from_location_line = int(from_location[1])
     target_location_line = int(target_location[1])
     match chosen_piece:
         case 'pawn':
             if current_player == 1:
-                if from_location_line == 2:
+                if target_location_line == from_location_line+1 and abs(f_l_location-t_l_location) == 1:
+                    return "TAKEOVER"
+                elif from_location_line == 2:
                     if target_location_line in (2, 3) and target_location[0] == from_location[0]:
                         return True
                 else:
-                    if target_location_line == from_location_line-1 and target_location[0] == from_location[0]:
+                    if target_location_line == from_location_line - 1 and target_location[0] == from_location[0]:
                         return True
             else:
-                if from_location_line == 7:
+                if target_location_line == from_location_line - 1 and abs(f_l_location-t_l_location) == 1:
+                    return "TAKEOVER"
+                elif from_location_line == 7:
                     if target_location_line in (6, 5) and target_location[0] == from_location[0]:
                         return True
                 else:
-                    if target_location_line == from_location_line+1 and target_location[0] == from_location[0]:
+                    if target_location_line == from_location_line + 1 and target_location[0] == from_location[0]:
                         return True
             return False
         case 'knight':
@@ -91,10 +99,10 @@ def main():
         print(f"Current player: {'white' if current_player == 1 else 'black'}")
 
         display()
-
+        global letters
         while True:
             from_location = input('Choose piece to move:  ')
-            letters = 'abcdefgh'
+
             if from_location[0] in letters and 0 < int(from_location[1]) < 9 and len(from_location) == 2:
                 l_index = letters.find(from_location[0])
                 if matrix[8 - int(from_location[1])][l_index][0] == current_player:
@@ -109,10 +117,10 @@ def main():
                 is_occupied = matrix[8 - int(target_location[1])][l_index][0]
                 what_is_there = matrix[8 - int(target_location[1])][l_index][1]
                 v = check_valid_move(chosen_piece, current_player, from_location, target_location)
-                if v: break
+                print(v)
+                if v:break
 
-
-        print(from_location, 'is', matrix[8 - int(from_location[1])][l_index][1])
+        print(from_location, '>', target_location, matrix[8 - int(from_location[1])][l_index][1])
 
         current_player = int(not bool(current_player - 1)) + 1
 
