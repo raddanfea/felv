@@ -140,7 +140,11 @@ def main():
         # target location
         while True:
             target_location = input('Where to move piece:  ')
-            if target_location[0] in letters and 0 < int(target_location[1]) < 9 and len(target_location) == 2:
+            if target_location \
+                    and target_location[0] in letters \
+                    and 0 < int(target_location[1]) < 9 \
+                    and len(target_location) == 2\
+                    and matrix[8 - int(target_location[1])][l_index][0] != current_player:
                 l_index = letters.find(target_location[0])
                 is_occupied = matrix[8 - int(target_location[1])][l_index][0]
                 what_is_there = matrix[8 - int(target_location[1])][l_index][1]
