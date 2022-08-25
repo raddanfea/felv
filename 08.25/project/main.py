@@ -164,16 +164,17 @@ def main():
                 valid = check_valid_move(chosen_piece, current_player, from_location, target_location)
                 if valid: break
 
+        # making ta move
         if valid:
             if what_is_there in chess_pieces:
-                taken.append(f'{what_is_there}')
+                taken.append((int(not bool(current_player - 1)) + 1, what_is_there))
             matrix[8 - int(target_location[1])][horizontal_index_target] = (current_player, chosen_piece)
             matrix[8 - int(from_location[1])][horizontal_index_original] = (0, empty_location)
 
         print(from_location, '>', target_location, chosen_piece)
 
         current_player = int(not bool(current_player - 1)) + 1
-
+        print(taken)
 
 if __name__ == '__main__':
     main()
