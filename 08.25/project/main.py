@@ -68,9 +68,9 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                     if target_location_line in (6, 5) and target_location[0] == from_location[0]:
                         return True
                 else:
-                    if target_location_line == from_location_line-1 and target_location[0] == from_location[0]:
+                    if target_location_line == from_location_line+1 and target_location[0] == from_location[0]:
                         return True
-
+            return False
         case 'knight':
             pass
         case 'bishop':
@@ -108,7 +108,9 @@ def main():
                 l_index = letters.find(target_location[0])
                 is_occupied = matrix[8 - int(target_location[1])][l_index][0]
                 what_is_there = matrix[8 - int(target_location[1])][l_index][1]
-                check_valid_move(chosen_piece, from_location, target_location)
+                v = check_valid_move(chosen_piece, current_player, from_location, target_location)
+                if v: break
+
 
         print(from_location, 'is', matrix[8 - int(from_location[1])][l_index][1])
 
