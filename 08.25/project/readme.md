@@ -6,6 +6,8 @@
 | Pieces            |   ✓    |
 | Players           |   ✓    |
 | Movement Types    |   ✓    |
-| Collison checking |   ☐    |
+| Taking            |   ✓    |
+| Collison check    |   ☐    |
+| Promotion         |   ☐    |
 | Check             |   ☐    |
 | Checkmate         |    ☐    | 
