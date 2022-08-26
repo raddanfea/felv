@@ -43,6 +43,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                             and matrix[8 - target_vertical_location][target_horizontal_location][0] == 0:
                         return True
             return False
+        # knight moves either 2 on x and 1 on y, or the other way around
         case 'knight':
             lateral = abs(from_horizontal_location - target_horizontal_location)
             vertical = abs(from_vertical_location - target_vertical_location)

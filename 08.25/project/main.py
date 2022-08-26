@@ -139,6 +139,16 @@ def check_check(current_player):
                 return True
         except IndexError:
             break
+    # check for knights
+    positions = (1, 2), (1, -2), (2, 1), (2, -1), (-1, 2), (-1, -2), (-2, 1), (-2, -1)
+    for x, y in positions:
+        try:
+            if matrix[find_king[1] + x][find_king[0] - y][0] not in (0, current_player) and \
+                    matrix[find_king[1] - x][find_king[0] - y][1] == 'knight':
+                return True
+        except IndexError:
+            continue
+    # check for pawns
 
     return False
 
