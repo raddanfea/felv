@@ -26,8 +26,8 @@ empty_location = " "
 chess_pieces = ['rook', 'knight', 'bishop', 'queen', 'king', 'bishop', 'knight', 'rook']
 taken = []
 
-# player id, piece id
-piece = (0, 0)
+# player id, piece name
+# piece_example = (0, 'pawn')
 
 
 def start_pos():
@@ -111,7 +111,7 @@ def check_check(current_player):
                 break
             elif matrix[find_king[1] + i][find_king[0] - i][0] not in (0, current_player) and \
                     matrix[find_king[1] + i][find_king[0] - i][1] in ('rook', 'queen'):
-                return 'bishop'
+                return 'bishop or queen'
         except IndexError:
             break
     for i in range(1, 8):
@@ -121,7 +121,7 @@ def check_check(current_player):
                 break
             elif matrix[find_king[1] - i][find_king[0] + i][0] not in (0, current_player) and \
                     matrix[find_king[1] - i][find_king[0] + i][1] in ('rook', 'queen'):
-                return 'bishop'
+                return 'bishop or queen'
         except IndexError:
             break
     for i in range(1, 8):
@@ -130,7 +130,7 @@ def check_check(current_player):
                 break
             elif matrix[find_king[1] + i][find_king[0] + i][0] not in (0, current_player) and \
                     matrix[find_king[1] + i][find_king[0] + i][1] in ('rook', 'queen'):
-                return 'bishop'
+                return 'bishop or queen'
         except IndexError:
             break
     for i in range(1, 8):
@@ -140,7 +140,7 @@ def check_check(current_player):
                 break
             elif matrix[find_king[1] - i][find_king[0] - i][0] not in (0, current_player) and \
                     matrix[find_king[1] - i][find_king[0] - i][1] in ('rook', 'queen'):
-                return 'bishop'
+                return 'bishop or queen'
         except IndexError:
             break
     # check for knights
@@ -153,10 +153,20 @@ def check_check(current_player):
         except IndexError:
             continue
     # check for pawns
-    if current_player:
+    if current_player == 1:
         if matrix[find_king[1] - 1][find_king[0] - 1][0] not in (0, current_player) and \
                 matrix[find_king[1] - 1][find_king[0] - 1][1] == 'pawn':
-            pass
+            return 'pawn'
+        elif matrix[find_king[1] - 1][find_king[0] + 1][0] not in (0, current_player) and \
+                matrix[find_king[1] - 1][find_king[0] + 1][1] == 'pawn':
+            return 'pawn'
+    else:
+        if matrix[find_king[1] + 1][find_king[0] - 1][0] not in (0, current_player) and \
+                matrix[find_king[1] + 1][find_king[0] - 1][1] == 'pawn':
+            return 'pawn'
+        elif matrix[find_king[1] + 1][find_king[0] + 1][0] not in (0, current_player) and \
+                matrix[find_king[1] + 1][find_king[0] + 1][1] == 'pawn':
+            return 'pawn'
     return False
 
 
@@ -174,7 +184,11 @@ def main():
         from_location = None
 
         # check if king is in check
-        print("Check: ", check_check(current_player))
+
+        chek = check_check(current_player)
+        if chek:
+            print('Check: ', chek)
+
         chosen_piece = ""
         # current player's piece
         while not from_location:
@@ -207,7 +221,7 @@ def main():
                 # id of occupier
                 is_occupied = matrix[8 - int(target_location[1])][horizontal_index_target][0]
                 # checks if target is the current player, if yes asks again
-                if is_occupied == current_player: continue
+                if is_occupied == current_player: print("Thats you!"); continue
                 # type of piece at target
                 what_is_there = matrix[8 - int(target_location[1])][horizontal_index_target][1]
                 # check is if  the move is valid type
@@ -235,7 +249,7 @@ def main():
             print(from_location, '>', target_location, chosen_piece)
 
             # swaps players
-            # current_player = int(not bool(current_player - 1)) + 1
+            current_player = int(not bool(current_player - 1)) + 1
         else:
             print("Invalid move!")
 
