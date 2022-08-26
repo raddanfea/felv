@@ -172,7 +172,7 @@ def main():
 
         # check if king is in check
         print("Check: ", check_check(current_player))
-
+        chosen_piece = ""
         # current player's piece
         while not from_location:
             from_location = input('Choose piece to move:  ')
@@ -197,11 +197,15 @@ def main():
                     and target_location[0] in letters \
                     and len(target_location) == 2 \
                     and 0 < int(target_location[1]) < 9:
+                # index of letter
                 horizontal_index_target = letters.find(target_location[0])
+                # id of occupier
                 is_occupied = matrix[8 - int(target_location[1])][horizontal_index_target][0]
-                # checks if target is the current player
+                # checks if target is the current player, if yes asks again
                 if is_occupied == current_player: continue
+                # type of piece at target
                 what_is_there = matrix[8 - int(target_location[1])][horizontal_index_target][1]
+                # check is if  the move is valid type
                 valid = check_valid_move(chosen_piece, current_player, from_location, target_location, matrix)
                 if valid: break
             # reset from location if typed back
