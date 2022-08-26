@@ -96,8 +96,9 @@ def check_collison(chosen_piece, current_player, from_location, target_location)
             if abs(vertical) > 1:
                 for i in range(1, abs(vertical)):
                     if \
-                    matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][from_horizontal_location][
-                        0] != 0:
+                            matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][
+                                from_horizontal_location][
+                                0] != 0:
                         return False
             elif abs(horizontal) > 1:
                 print("h")
@@ -117,8 +118,9 @@ def check_collison(chosen_piece, current_player, from_location, target_location)
             elif abs(vertical) > 1:
                 for i in range(1, abs(vertical)):
                     if \
-                    matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][from_horizontal_location][
-                        0] != 0:
+                            matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][
+                                from_horizontal_location][
+                                0] != 0:
                         return False
             elif abs(horizontal) > 1:
                 print("h")
@@ -143,7 +145,8 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
             if current_player == 1:
                 if target_vertical_location == from_vertical_location + 1 \
                         and abs(from_horizontal_location - target_horizontal_location) == 1 \
-                            and matrix[8 - target_vertical_location][target_horizontal_location][0] not in [0, current_player]:
+                        and matrix[8 - target_vertical_location][target_horizontal_location][0] not in [0,
+                                                                                                        current_player]:
                     return "TAKEOVER"
                 elif from_vertical_location == 2:
                     if target_vertical_location in (3, 4) \
@@ -157,7 +160,8 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
             else:
                 if target_vertical_location == from_vertical_location - 1 and abs(
                         from_horizontal_location - target_horizontal_location) == 1 \
-                            and matrix[8 - target_vertical_location][target_horizontal_location][0] not in [0, current_player]:
+                        and matrix[8 - target_vertical_location][target_horizontal_location][0] not in [0,
+                                                                                                        current_player]:
                     return "TAKEOVER"
                 elif from_vertical_location == 7:
                     if target_vertical_location in (6, 5) \
