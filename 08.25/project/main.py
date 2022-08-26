@@ -142,26 +142,32 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
         case 'pawn':
             if current_player == 1:
                 if target_vertical_location == from_vertical_location + 1 \
-                        and abs(from_horizontal_location - target_horizontal_location) == 1:
+                        and abs(from_horizontal_location - target_horizontal_location) == 1 \
+                            and matrix[8 - target_vertical_location][target_horizontal_location][0] not in [0, current_player]:
                     return "TAKEOVER"
                 elif from_vertical_location == 2:
                     if target_vertical_location in (3, 4) \
-                            and target_horizontal_location == from_horizontal_location:
+                            and target_horizontal_location == from_horizontal_location \
+                            and matrix[8 - target_vertical_location][target_horizontal_location][0] == 0:
                         return True
                 elif target_vertical_location == from_vertical_location + 1 \
-                        and target_horizontal_location == from_horizontal_location:
+                        and target_horizontal_location == from_horizontal_location \
+                        and matrix[8 - target_vertical_location][target_horizontal_location][0] == 0:
                     return True
             else:
                 if target_vertical_location == from_vertical_location - 1 and abs(
-                        from_horizontal_location - target_horizontal_location) == 1:
+                        from_horizontal_location - target_horizontal_location) == 1 \
+                            and matrix[8 - target_vertical_location][target_horizontal_location][0] not in [0, current_player]:
                     return "TAKEOVER"
                 elif from_vertical_location == 7:
                     if target_vertical_location in (6, 5) \
-                            and target_horizontal_location == from_horizontal_location:
+                            and target_horizontal_location == from_horizontal_location \
+                            and matrix[8 - target_vertical_location][target_horizontal_location][0] == 0:
                         return True
                 else:
                     if target_vertical_location == from_vertical_location - 1 \
-                            and target_horizontal_location == from_vertical_location:
+                            and target_horizontal_location == from_vertical_location \
+                            and matrix[8 - target_vertical_location][target_horizontal_location][0] == 0:
                         return True
             return False
         case 'knight':
@@ -269,7 +275,8 @@ def main():
 
             print(from_location, '>', target_location, chosen_piece)
 
-            # current_player = int(not bool(current_player - 1)) + 1
+            # swaps players
+            current_player = int(not bool(current_player - 1)) + 1
         else:
             print("Invalid move!")
 
