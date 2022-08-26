@@ -153,7 +153,10 @@ def check_check(current_player):
         except IndexError:
             continue
     # check for pawns
-
+    if current_player:
+        if matrix[find_king[1] - 1][find_king[0] - 1][0] not in (0, current_player) and \
+                matrix[find_king[1] - 1][find_king[0] - 1][1] == 'pawn':
+            pass
     return False
 
 
@@ -176,7 +179,9 @@ def main():
         # current player's piece
         while not from_location:
             from_location = input('Choose piece to move:  ')
-            if from_location[0] == 'k':
+
+            # DEBUG: destroy a piece eg. kd1 destroys d1
+            if from_location[0] == 'k' and False:
                 matrix[8 - int(from_location[2])][letters.find(from_location[1])] = (0, empty_location)
                 from_location = None
                 break
