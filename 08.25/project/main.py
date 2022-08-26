@@ -224,11 +224,9 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
 def main():
     current_player = 1
     start_pos()
-
     while True:
-        print(f"Current player: {'white' if current_player == 1 else 'black'}")
-
         display()
+        print(f"Current player: {'White' if current_player == 1 else 'Black'}")
         global letters
         from_location = None
 
