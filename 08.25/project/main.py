@@ -64,7 +64,6 @@ def check_check(current_player):
         for x, (player, pawn) in enumerate(line):
             if player == current_player and pawn == 'king':
                 find_king = (x, y)
-
     # check for rooks
     for i in range(1, 8):
         try:
@@ -72,16 +71,17 @@ def check_check(current_player):
                 break
             elif matrix[find_king[1] + i][find_king[0]][0] not in (0, current_player) and \
                     matrix[find_king[1] + i][find_king[0]][1] in ('rook', 'queen'):
-                return True
+                return 'rook'
         except IndexError:
             break
     for i in range(1, 8):
         try:
+            if find_king[1] - i < 0: break
             if matrix[find_king[1] - i][find_king[0]][0] == current_player:
                 break
             elif matrix[find_king[1] - i][find_king[0]][0] not in (0, current_player) and \
                     matrix[find_king[1] - i][find_king[0]][1] in ('rook', 'queen'):
-                return True
+                return 'rook'
         except IndexError:
             break
     for i in range(1, 8):
@@ -90,35 +90,38 @@ def check_check(current_player):
                 break
             elif matrix[find_king[1]][find_king[0] + i][0] not in (0, current_player) and \
                     matrix[find_king[1]][find_king[0] + i][1] in ('rook', 'queen'):
-                return True
+                return 'rook'
         except IndexError:
             break
     for i in range(1, 8):
         try:
+            if find_king[0] - i < 0: break
             if matrix[find_king[1]][find_king[0] - i][0] == current_player:
                 break
             elif matrix[find_king[1]][find_king[0] - i][0] not in (0, current_player) and \
                     matrix[find_king[1]][find_king[0] - i][1] in ('rook', 'queen'):
-                return True
+                return 'rook'
         except IndexError:
             break
     # check for bishops
     for i in range(1, 8):
         try:
+            if find_king[0] - i < 0: break
             if matrix[find_king[1] + i][find_king[0] - i][0] == current_player:
                 break
             elif matrix[find_king[1] + i][find_king[0] - i][0] not in (0, current_player) and \
                     matrix[find_king[1] + i][find_king[0] - i][1] in ('rook', 'queen'):
-                return True
+                return 'bishop'
         except IndexError:
             break
     for i in range(1, 8):
         try:
+            if find_king[1] - i < 0: break
             if matrix[find_king[1] - i][find_king[0] + i][0] == current_player:
                 break
             elif matrix[find_king[1] - i][find_king[0] + i][0] not in (0, current_player) and \
                     matrix[find_king[1] - i][find_king[0] + i][1] in ('rook', 'queen'):
-                return True
+                return 'bishop'
         except IndexError:
             break
     for i in range(1, 8):
@@ -127,16 +130,17 @@ def check_check(current_player):
                 break
             elif matrix[find_king[1] + i][find_king[0] + i][0] not in (0, current_player) and \
                     matrix[find_king[1] + i][find_king[0] + i][1] in ('rook', 'queen'):
-                return True
+                return 'bishop'
         except IndexError:
             break
     for i in range(1, 8):
         try:
+            if find_king[1] - i < 0 or find_king[0] - i < 0: break
             if matrix[find_king[1] - i][find_king[0] - i][0] == current_player:
                 break
             elif matrix[find_king[1] - i][find_king[0] - i][0] not in (0, current_player) and \
                     matrix[find_king[1] - i][find_king[0] - i][1] in ('rook', 'queen'):
-                return True
+                return 'bishop'
         except IndexError:
             break
     # check for knights
@@ -145,7 +149,7 @@ def check_check(current_player):
         try:
             if matrix[find_king[1] + x][find_king[0] - y][0] not in (0, current_player) and \
                     matrix[find_king[1] - x][find_king[0] - y][1] == 'knight':
-                return True
+                return 'knight'
         except IndexError:
             continue
     # check for pawns
@@ -163,7 +167,7 @@ def main():
         from_location = None
 
         # check if king is in check
-        print("Check: ", check_check(current_player))
+        print("Check: ", check_check(2))
 
         # current player's piece
         while not from_location:
@@ -216,7 +220,7 @@ def main():
             print(from_location, '>', target_location, chosen_piece)
 
             # swaps players
-            current_player = int(not bool(current_player - 1)) + 1
+            # current_player = int(not bool(current_player - 1)) + 1
         else:
             print(valid, " c ", collison)
             print("Invalid move!")
