@@ -157,6 +157,10 @@ def check_check(current_player):
     return False
 
 
+def swap_to_queen_if_pawn_at_right_position():
+    pass
+
+
 def main():
     current_player = 1
     start_pos()
@@ -216,6 +220,8 @@ def main():
                 taken.append((int(not bool(current_player - 1)) + 1, what_is_there))
             matrix[8 - int(target_location[1])][horizontal_index_target] = (current_player, chosen_piece)
             matrix[8 - int(from_location[1])][horizontal_index_original] = (0, empty_location)
+
+            swap_to_queen_if_pawn_at_right_position()
 
             print(from_location, '>', target_location, chosen_piece)
 
