@@ -9,5 +9,5 @@
 | Taking            |   ✓    |
 | Collison check    |   ✓    |
 | Promotion         |   ☐    |
-| Check             |   ☐    |
+| Check             |   ✓    |
 | Checkmate         |   ☐    | 
