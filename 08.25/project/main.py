@@ -84,18 +84,48 @@ def check_collison(chosen_piece, current_player, from_location, target_location)
         case 'bishop':
             vertical = target_vertical_location - from_vertical_location
             horizontal = target_horizontal_location - from_horizontal_location
-            if vertical:
-                for i in range(vertical-1):
-                    if matrix[8 - from_vertical_location + i][from_horizontal_location][0] != 0:
-                        return False
-            elif horizontal:
-                for i in range(horizontal-1):
-                    if matrix[8 - from_vertical_location][from_horizontal_location + i][0] != 0:
+            if abs(vertical) > 1:
+                for i in range(1, abs(vertical)):
+                    if matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][
+                        from_horizontal_location + int(i * horizontal // abs(horizontal))][0] != 0:
                         return False
             return True
         case 'rook':
+            vertical = target_vertical_location - from_vertical_location
+            horizontal = target_horizontal_location - from_horizontal_location
+            if abs(vertical) > 1:
+                for i in range(1, abs(vertical)):
+                    if \
+                    matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][from_horizontal_location][
+                        0] != 0:
+                        return False
+            elif abs(horizontal) > 1:
+                print("h")
+                for i in range(1, abs(horizontal)):
+                    if matrix[8 - from_vertical_location][
+                        from_horizontal_location + int(i * horizontal // abs(horizontal))][0] != 0:
+                        return False
             return True
         case 'queen':
+            vertical = target_vertical_location - from_vertical_location
+            horizontal = target_horizontal_location - from_horizontal_location
+            if abs(vertical) > 1 and abs(horizontal) > 1:
+                for i in range(1, abs(vertical)):
+                    if matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][
+                        from_horizontal_location + int(i * horizontal // abs(horizontal))][0] != 0:
+                        return False
+            if abs(vertical) > 1:
+                for i in range(1, abs(vertical)):
+                    if \
+                    matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][from_horizontal_location][
+                        0] != 0:
+                        return False
+            elif abs(horizontal) > 1:
+                print("h")
+                for i in range(1, abs(horizontal)):
+                    if matrix[8 - from_vertical_location][
+                        from_horizontal_location + int(i * horizontal // abs(horizontal))][0] != 0:
+                        return False
             return True
 
 
@@ -126,7 +156,7 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
                         from_horizontal_location - target_horizontal_location) == 1:
                     return "TAKEOVER"
                 elif from_vertical_location == 7:
-                    if target_vertical_location in (6, 5)\
+                    if target_vertical_location in (6, 5) \
                             and target_horizontal_location == from_horizontal_location:
                         return True
                 else:
