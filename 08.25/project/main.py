@@ -114,7 +114,7 @@ def check_collison(chosen_piece, current_player, from_location, target_location)
                     if matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][
                         from_horizontal_location + int(i * horizontal // abs(horizontal))][0] != 0:
                         return False
-            if abs(vertical) > 1:
+            elif abs(vertical) > 1:
                 for i in range(1, abs(vertical)):
                     if \
                     matrix[8 - from_vertical_location - int(i * vertical // abs(vertical))][from_horizontal_location][
@@ -250,10 +250,11 @@ def main():
                 what_is_there = matrix[8 - int(target_location[1])][horizontal_index_target][1]
                 valid = check_valid_move(chosen_piece, current_player, from_location, target_location)
                 if valid: break
-
+            # reset from location if typed back
             if target_location == "back":
                 from_location = None
                 break
+        # return to the start of the iteration if typed back
         if target_location == "back":
             continue
 
