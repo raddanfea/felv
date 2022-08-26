@@ -1,8 +1,9 @@
 
+letters = 'abcdefgh'
 # checks if it would be a valid move  without considering other pieces in the way
 # returns True or False except in special cases:
 # pawn takeover move returns 'TAKEOVER'
-def check_valid_move(chosen_piece, current_player, from_location, target_location):
+def check_valid_move(chosen_piece, current_player, from_location, target_location, matrix):
     from_horizontal_location = letters.find(from_location[0])
     target_horizontal_location = letters.find(target_location[0])
     from_vertical_location = int(from_location[1])

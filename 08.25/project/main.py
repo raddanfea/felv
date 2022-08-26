@@ -1,4 +1,5 @@
-import check_valid_move, check_collison
+from check_collison_file import check_collison
+from check_valid_move_file import check_valid_move
 
 matrix = [0] * 8
 
@@ -57,8 +58,6 @@ w_chess = {
 }
 
 
-
-
 def check_check(current_player):
     find_king = [-1, -1]
     for y, line in enumerate(matrix):
@@ -104,10 +103,44 @@ def check_check(current_player):
         except IndexError:
             break
     # check for bishops
+    for i in range(1, 8):
+        try:
+            if matrix[find_king[1] + i][find_king[0] - i][0] == current_player:
+                break
+            elif matrix[find_king[1] + i][find_king[0] - i][0] not in (0, current_player) and \
+                    matrix[find_king[1] + i][find_king[0] - i][1] in ('rook', 'queen'):
+                return True
+        except IndexError:
+            break
+    for i in range(1, 8):
+        try:
+            if matrix[find_king[1] - i][find_king[0] + i][0] == current_player:
+                break
+            elif matrix[find_king[1] - i][find_king[0] + i][0] not in (0, current_player) and \
+                    matrix[find_king[1] - i][find_king[0] + i][1] in ('rook', 'queen'):
+                return True
+        except IndexError:
+            break
+    for i in range(1, 8):
+        try:
+            if matrix[find_king[1] + i][find_king[0] + i][0] == current_player:
+                break
+            elif matrix[find_king[1] + i][find_king[0] + i][0] not in (0, current_player) and \
+                    matrix[find_king[1] + i][find_king[0] + i][1] in ('rook', 'queen'):
+                return True
+        except IndexError:
+            break
+    for i in range(1, 8):
+        try:
+            if matrix[find_king[1] - i][find_king[0] - i][0] == current_player:
+                break
+            elif matrix[find_king[1] - i][find_king[0] - i][0] not in (0, current_player) and \
+                    matrix[find_king[1] - i][find_king[0] - i][1] in ('rook', 'queen'):
+                return True
+        except IndexError:
+            break
 
     return False
-
-
 
 
 def main():
@@ -151,7 +184,7 @@ def main():
                 # checks if target is the current player
                 if is_occupied == current_player: continue
                 what_is_there = matrix[8 - int(target_location[1])][horizontal_index_target][1]
-                valid = check_valid_move(chosen_piece, current_player, from_location, target_location)
+                valid = check_valid_move(chosen_piece, current_player, from_location, target_location, matrix)
                 if valid: break
             # reset from location if typed back
             if target_location == "back":
@@ -162,7 +195,7 @@ def main():
             continue
 
         # making ta move
-        collison = check_collison(chosen_piece, current_player, from_location, target_location)
+        collison = check_collison(chosen_piece, current_player, from_location, target_location, matrix)
 
         if valid and collison:
             if what_is_there in chess_pieces:

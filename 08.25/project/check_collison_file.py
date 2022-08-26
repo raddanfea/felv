@@ -1,4 +1,5 @@
-def check_collison(chosen_piece, current_player, from_location, target_location):
+letters = 'abcdefgh'
+def check_collison(chosen_piece, current_player, from_location, target_location, matrix):
     from_horizontal_location = letters.find(from_location[0])
     target_horizontal_location = letters.find(target_location[0])
     from_vertical_location = int(from_location[1])
