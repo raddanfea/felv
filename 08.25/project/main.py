@@ -167,7 +167,7 @@ def main():
         from_location = None
 
         # check if king is in check
-        print("Check: ", check_check(2))
+        print("Check: ", check_check(current_player))
 
         # current player's piece
         while not from_location:
@@ -222,7 +222,6 @@ def main():
             # swaps players
             # current_player = int(not bool(current_player - 1)) + 1
         else:
-            print(valid, " c ", collison)
             print("Invalid move!")
 
 
