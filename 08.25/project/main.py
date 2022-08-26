@@ -123,12 +123,62 @@ def check_collison(chosen_piece, current_player, from_location, target_location)
                                 0] != 0:
                         return False
             elif abs(horizontal) > 1:
-                print("h")
                 for i in range(1, abs(horizontal)):
                     if matrix[8 - from_vertical_location][
                         from_horizontal_location + int(i * horizontal // abs(horizontal))][0] != 0:
                         return False
             return True
+    return True
+
+
+def check_check(current_player):
+    find_king = [-1, -1]
+    for y, line in enumerate(matrix):
+        for x, (player, pawn) in enumerate(line):
+            if player == current_player and pawn == 'king':
+                find_king = (x, y)
+
+    # check for rooks
+    for i in range(1, 8):
+        try:
+            if matrix[find_king[1] + i][find_king[0]][0] == current_player:
+                break
+            elif matrix[find_king[1] + i][find_king[0]][0] not in (0, current_player) and \
+                    matrix[find_king[1] + i][find_king[0]][1] in ('rook', 'queen'):
+                return True
+        except IndexError:
+            break
+    for i in range(1, 8):
+        try:
+            if matrix[find_king[1] - i][find_king[0]][0] == current_player:
+                break
+            elif matrix[find_king[1] - i][find_king[0]][0] not in (0, current_player) and \
+                    matrix[find_king[1] - i][find_king[0]][1] in ('rook', 'queen'):
+                return True
+        except IndexError:
+            break
+    for i in range(1, 8):
+        try:
+            if matrix[find_king[1]][find_king[0] + i][0] == current_player:
+                break
+            elif matrix[find_king[1]][find_king[0] + i][0] not in (0, current_player) and \
+                    matrix[find_king[1]][find_king[0] + i][1] in ('rook', 'queen'):
+                return True
+        except IndexError:
+            break
+    for i in range(1, 8):
+        try:
+            if matrix[find_king[1]][find_king[0] - i][0] == current_player:
+                break
+            elif matrix[find_king[1]][find_king[0] - i][0] not in (0, current_player) and \
+                    matrix[find_king[1]][find_king[0] - i][1] in ('rook', 'queen'):
+                return True
+        except IndexError:
+            break
+    # check for bishops
+
+
+    return False
 
 
 # checks if it would be a valid move  without considering other pieces in the way
@@ -212,15 +262,13 @@ def check_valid_move(chosen_piece, current_player, from_location, target_locatio
             return False
         # king is checking neighbors
         case 'king':
-            print(abs(from_horizontal_location - target_horizontal_location),
-                  from_vertical_location == target_vertical_location)
             if abs(from_vertical_location - target_vertical_location) == 1 and from_horizontal_location == target_horizontal_location:
                 return True
             elif abs(
                     from_horizontal_location - target_horizontal_location) == 1 and from_vertical_location == target_vertical_location:
                 return True
-            elif abs(from_horizontal_location - target_horizontal_location) == 1 \
-                    and abs(from_vertical_location - target_vertical_location) == 1:
+            elif abs(from_horizontal_location - target_horizontal_location) == 1 and abs(
+                    from_vertical_location - target_vertical_location) == 1:
                 return True
             return False
 
@@ -234,19 +282,28 @@ def main():
         global letters
         from_location = None
 
+        # check if king is in check
+        print(check_check(current_player))
+
         # current player's piece
         while not from_location:
             from_location = input('Choose piece to move:  ')
+            if from_location[0] == 'k':
+                matrix[8 - int(from_location[2])][letters.find(from_location[1])] = (0, empty_location)
+                from_location = None
+                break
+
             if from_location[0] in letters and 0 < int(from_location[1]) < 9 and len(from_location) == 2:
                 horizontal_index_original = letters.find(from_location[0])
                 if matrix[8 - int(from_location[1])][horizontal_index_original][0] == current_player:
                     chosen_piece = matrix[8 - int(from_location[1])][horizontal_index_original][1]
                     break
-            from_location = None
+                else:
+                    from_location = None
 
         # target location
         valid, what_is_there = False, False
-        while True:
+        while from_location:
             target_location = input('Where to move piece:  ')
             if target_location \
                     and target_location[0] in letters \
@@ -263,7 +320,7 @@ def main():
                 from_location = None
                 break
         # return to the start of the iteration if typed back
-        if target_location == "back":
+        if not from_location or target_location == "back":
             continue
 
         # making ta move
@@ -280,6 +337,7 @@ def main():
             # swaps players
             current_player = int(not bool(current_player - 1)) + 1
         else:
+            print(valid, " c ", collison)
             print("Invalid move!")
 
 
